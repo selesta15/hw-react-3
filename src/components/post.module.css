@@ -1,0 +1,16 @@
+.post {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .post h2 {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  
+  .post p {
+    font-size: 14px;
+    color: #555;
+  }
