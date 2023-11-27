@@ -1,6 +1,14 @@
 import React from "react";
 import { useState } from 'react';
 import Post from './components/post'
+import styles from './App.module.css'
+import ThemeContext, { useTheme, ThemeProvider } from './components/ThemeContext/index'
+
+
+
+
+
+
 
 const DATA = [
   {
@@ -31,9 +39,14 @@ const DATA = [
 ]
 
 function App() {
-
+  
   const [posts, setPosts] = useState(DATA);
   const [newTitle, setNewTitle] = useState('');
+  const { darkMode, toggleTheme } = useTheme();
+
+
+  
+
 
   const handleAddPost = () => {
     const newPost = {
@@ -50,9 +63,20 @@ function App() {
     setPosts(updatedPosts);
   };
 
+
+
   return (
-    <div>
-      <form onSubmit={(e) => { e.preventDefault(); }}>
+    
+  <div className={darkMode ? styles.darkMode : styles.lightMode}>
+      <label className={styles.switch}>
+        <input
+          type="checkbox"
+          checked={darkMode}
+          onChange={toggleTheme}
+        />
+        <span className={styles.slider}></span>
+      </label>
+       <form className={styles.form} onSubmit={(e) => { e.preventDefault(); }}>
         <input
           type="text"
           placeholder="Enter title"
@@ -62,19 +86,27 @@ function App() {
         <button type="submit" onClick={handleAddPost}>
           Add
         </button>
-      </form>
+       </form>
       <div>
         {posts.map(post => (
           <div key={post.id}>
             <Post title={post.title} />
-            <button onClick={() => handleRemovePost(post.id)}>
+            <button className={styles.removeButton} onClick={() => handleRemovePost(post.id)}>
               Remove
             </button>
           </div>
         ))}
-      </div>
-    </div>
-  );
+       </div>
+   </div>
+);
 }
 
-export default App;
+
+
+export default function ThemedApp() {
+  return (
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
+  );
+}
